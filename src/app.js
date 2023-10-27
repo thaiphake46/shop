@@ -11,16 +11,14 @@ const app = express();
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(compression());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // inti db
 require('./db/initMongodb');
 
 // init route
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'NucMD',
-    });
-});
+app.use('/', require('./routes'));
 
 // handle error
 
